@@ -8,6 +8,8 @@ const CommandManager = require('./controllers/command-manager');
 
 const configFile = fs.readFileSync('./config.json');
 const config = JSON.parse(configFile);
+const address = config.address;
+const port = config.port;
 
 const publisher = new Publisher(config.pubnub);
 const weather = new Weather(config.weather, publisher);
@@ -67,7 +69,7 @@ app.get('/end', (req, res) => {
   res.send('End');
 });
 
-const server = app.listen(8081, () => {
+const server = app.listen(port, address, () => {
   const address = server.address();
   console.log('Cactus Pi Server started at http://%s:%s', address.address, address.port);
 });
