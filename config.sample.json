@@ -7,16 +7,8 @@
     "secretKey": "",
     "channel": "cactuspi"
   },
-  "weather": {
-    "apiKey": "weather api key",
-    "city": "city",
-    "unit": "metric"
-  },
-  "bustime": {
-    "apiKey": "bustime api key",
-    "lineRef": "MTA NYCT_<BUS NUMBER>",
-    "directionRef": 0,
-    "monitoringRef": 0,
-    "maximumStopVisits": 5
+  "plugins": {
+    "weather": true,
+    "bustime": true
   }
 }

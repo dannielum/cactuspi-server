@@ -1,7 +1,7 @@
 {
   "name": "cactuspi-server",
   "version": "0.0.1",
-  "description": "A raspberry pi server manages messages to be sent to a pi client.",
+  "description": "A server manages messages to be sent to cactuspi-client.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

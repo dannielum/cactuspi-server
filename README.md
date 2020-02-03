@@ -5,6 +5,15 @@ A Raspberry Pi server to manage messages to be sent to a client.
 - Raspberry Pi
 
 ## Services ##
+- Publisher
+
+## Controllers ##
+- CommandManager
+
+## Plugins ##
 - Weather
-- Bus time
-- Message
+- Bustime
+
+You can create your own plugin.
+
+**TODO - documentation**

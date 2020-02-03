@@ -1,18 +1,25 @@
+const fs = require('fs');
 const request = require('request');
 
+const configFile = fs.readFileSync(`${__dirname}/config.json`);
+const config = JSON.parse(configFile);
+
 module.exports = class Weather {
-  constructor(config, publisher) {
+  constructor(publisher) {
     this._publisher = publisher;
-    this._city = config.city;
-    this._unit = config.unit;
-    this._apiKey = config.apiKey;
-    this._weatherUrl = `http://api.openweathermap.org/data/2.5/weather?zip=${this._city}&units=${this._unit}&appid=${this._apiKey}`;
+
+    const { city, unit, apiKey } = config;
+    this._unit = unit;
+    this._weatherUrl = `http://api.openweathermap.org/data/2.5/weather?zip=${city}&units=${unit}&appid=${apiKey}`;
   }
 
-  fetch() {
+  init() {
+  }
+
+  fetch(req, res) {
     request(this._weatherUrl, (err, response, body) => {
       if (err) {
-        throw new Error(`Weather: ${err}`);
+        throw new Error('Weather Error', err);
       }
 
       const result = JSON.parse(body);
@@ -30,13 +37,15 @@ module.exports = class Weather {
       const condition = `Forecast: ${result.weather[0].description}. Humidity: ${result.main.humidity}%.`;
       const message = `${result.name} - ${temperature} ${condition}`;
 
-      console.log('weather', message);
+      console.log('Weather', message);
       this._publisher.publish(message, {
         'repeat': false,
         'name': 'weather',
-        'duration': 20,
+        'duration': 35,
         'priority': false
       });
     });
+
+    res.send('Weather fetched');
   }
 };

@@ -2,30 +2,40 @@ const fs = require('fs');
 const express = require('express');
 
 const Publisher = require('./services/publisher');
-const Weather = require('./controllers/weather');
-const Bustime = require('./controllers/bustime');
 const CommandManager = require('./controllers/command-manager');
 
 const configFile = fs.readFileSync('./config.json');
 const config = JSON.parse(configFile);
-const address = config.address;
-const port = config.port;
+const { address, port, plugins } = config;
+
+const pluginServices = [];
+Object.entries(plugins).forEach(([plugin, enabled]) => {
+  if (enabled) {
+    try {
+      pluginServices.push({
+        name: plugin,
+        service: require(`./plugins/${plugin}`)
+      });
+    } catch ({ message }) {
+      console.error(message);
+    }
+  }
+});
 
 const publisher = new Publisher(config.pubnub);
-const weather = new Weather(config.weather, publisher);
-const bustime = new Bustime(config.bustime, publisher);
 const commandManager = new CommandManager(publisher);
 
 const app = express();
 
-app.get('/weather', (req, res) => {
-  weather.fetch();
-  res.send('Weather fetched');
-});
+pluginServices.forEach(({ name, service }) => {
+  const plugin = new service(publisher);
+  if (plugin.init) {
+    plugin.init();
+  }
 
-app.get('/bustime', (req, res) => {
-  bustime.fetch();
-  res.send('Bustime fetched');
+  app.get(`/${name}`, (req, res) => {
+    plugin.fetch(req, res);
+  });
 });
 
 app.get('/hello', (req, res) => {

@@ -1,0 +1,7 @@
+{
+  "apiKey": "bustime api key",
+  "lineRef": "MTA NYCT_<BUS NUMBER>",
+  "directionRef": 0,
+  "monitoringRef": 0,
+  "maximumStopVisits": 5
+}
