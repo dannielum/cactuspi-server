@@ -7,11 +7,6 @@ const config = JSON.parse(configFile);
 module.exports = class Bustime {
   constructor(publisher) {
     this._publisher = publisher;
-
-    this._lineRef = config.lineRef;
-    this._directionRef = config.directionRef;
-    this._monitoringRef = config.monitoringRef;
-    this._maximumStopVisits = config.maximumStopVisits;
   }
 
   init() {
@@ -19,11 +14,14 @@ module.exports = class Bustime {
   }
 
   fetch(req, res) {
+    const param = req.params.param || config.default;
+    const busConfig = config.options[param];
+
     const options = {
-      LineRef: this._lineRef,
-      DirectionRef: this._directionRef,
-      MonitoringRef: this._monitoringRef,
-      MaximumStopVisits: this._maximumStopVisits
+      LineRef: busConfig.lineRef,
+      DirectionRef: busConfig.directionRef,
+      MonitoringRef: busConfig.monitoringRef,
+      MaximumStopVisits: busConfig.maximumStopVisits
     };
     this._busTime.stopMonitoring(options, (err, res, body) => {
       if (err) {
@@ -45,14 +43,12 @@ module.exports = class Bustime {
       });
 
       console.log('Bustime', message);
-      if (total > 0) {
-        this._publisher.publish(message, {
-          'repeat': false,
-          'name': 'bustime',
-          'duration': 8 + (15 * total),
-          'priority': false
-        });
-      }
+      this._publisher.publish(message, {
+        'repeat': false,
+        'name': 'bustime',
+        'duration': 8 + (15 * total),
+        'priority': false
+      });
     });
 
     res.send('Bustime fetched');

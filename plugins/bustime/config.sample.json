@@ -1,7 +1,18 @@
 {
   "apiKey": "bustime api key",
-  "lineRef": "MTA NYCT_<BUS NUMBER>",
-  "directionRef": 0,
-  "monitoringRef": 0,
-  "maximumStopVisits": 5
+  "default": "line1",
+  "options": {
+    "line1": {
+      "directionRef": 0,
+      "maximumStopVisits": 3,
+      "monitoringRef": "<MONITORING REF>",
+      "lineRef": "MTA NYCT_<BUS NUMBER>"
+    },
+    "line2": {
+      "directionRef": 0,
+      "maximumStopVisits": 3,
+      "monitoringRef": "<MONITORING REF>",
+      "lineRef": "MTA NYCT_<BUS NUMBER>"
+    }
+  }
 }

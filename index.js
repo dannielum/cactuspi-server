@@ -33,7 +33,7 @@ pluginServices.forEach(({ name, service }) => {
     plugin.init();
   }
 
-  app.get(`/${name}`, (req, res) => {
+  app.get(`/${name}/:param?`, (req, res) => {
     plugin.fetch(req, res);
   });
 });
