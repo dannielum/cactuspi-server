@@ -20,7 +20,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mta-bustime": "^1.0.0",
-    "pubnub": "^4.27.3",
-    "request": "^2.88.0"
+    "pubnub": "^4.27.6",
+    "request": "^2.88.2"
   }
 }
