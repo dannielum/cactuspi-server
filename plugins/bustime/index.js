@@ -32,6 +32,11 @@ module.exports = class Bustime {
       let message = '';
 
       stopMonitoringDelivery.forEach(stopMonitoring => {
+        if (stopMonitoring.ErrorCondition) {
+          message = stopMonitoring.ErrorCondition.Description;
+          return;
+        }
+        
         const monitoredStopVisit = stopMonitoring.MonitoredStopVisit;
         message = `There ${monitoredStopVisit.length === 1 ? 'is' : 'are'} ${monitoredStopVisit.length} bus${monitoredStopVisit.length === 1 ? '' : 'es'} coming. `;
         monitoredStopVisit.forEach(stopVisit => {
