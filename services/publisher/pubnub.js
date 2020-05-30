@@ -1,6 +1,6 @@
 const PubNub = require('pubnub');
 
-module.exports = class Publisher {
+module.exports = class PubNubPublisher {
   constructor(config) {
     this._channel = config.channel;
     this._pubNub = new PubNub({

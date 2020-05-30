@@ -19,6 +19,7 @@
   "homepage": "https://github.com/dannielum/cactuspi-server#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mqtt": "^4.1.0",
     "mta-bustime": "^1.0.0",
     "pubnub": "^4.27.6",
     "request": "^2.88.2"

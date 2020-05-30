@@ -1,11 +1,16 @@
 {
   "address": "localhost",
   "port": 8081,
+  "pubsubType": "pubnub",
   "pubnub": {
     "subscribeKey": "",
     "publishKey": "",
     "secretKey": "",
     "channel": "cactuspi"
+  },
+  "mqtt": {
+    "brokerUrl": "mqtt://your-url:8080",
+    "topic": "ledmatrix/cactuspi"
   },
   "plugins": {
     "weather": true,

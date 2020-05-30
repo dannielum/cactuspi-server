@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 
-const Publisher = require('./services/publisher');
+const { Publisher } = require('./services');
 const CommandManager = require('./controllers/command-manager');
 
 const configFile = fs.readFileSync('./config.json');
@@ -14,7 +14,7 @@ Object.entries(plugins).forEach(([plugin, enabled]) => {
     try {
       pluginServices.push({
         name: plugin,
-        service: require(`./plugins/${plugin}`)
+        service: require(`./plugins/${plugin}`),
       });
     } catch ({ message }) {
       console.error(message);
@@ -22,7 +22,7 @@ Object.entries(plugins).forEach(([plugin, enabled]) => {
   }
 });
 
-const publisher = new Publisher(config.pubnub);
+const publisher = new Publisher(config);
 const commandManager = new CommandManager(publisher);
 
 const app = express();
@@ -40,10 +40,10 @@ pluginServices.forEach(({ name, service }) => {
 
 app.get('/hello', (req, res) => {
   publisher.publish('Hello World!', {
-    'repeat': false,
-    'name': 'hello',
-    'duration': 5,
-    'priority': true
+    repeat: false,
+    name: 'hello',
+    duration: 5,
+    priority: true,
   });
   res.send('Hello World!');
 });
@@ -51,10 +51,10 @@ app.get('/hello', (req, res) => {
 app.get('/message/:message', (req, res) => {
   const message = req.params.message;
   publisher.publish(`Message: ${message}`, {
-    'repeat': req.param('repeat') || false,
-    'name': req.param('name') || 'message',
-    'duration': req.param('duration') || 10,
-    'priority': req.param('message') || true
+    repeat: req.param('repeat') || false,
+    name: req.param('name') || 'message',
+    duration: req.param('duration') || 10,
+    priority: req.param('message') || true,
   });
   res.send(`Message: "${message}"`);
 });
@@ -81,5 +81,9 @@ app.get('/end', (req, res) => {
 
 const server = app.listen(port, address, () => {
   const address = server.address();
-  console.log('Cactus Pi Server started at http://%s:%s', address.address, address.port);
+  console.log(
+    'Cactus Pi Server started at http://%s:%s',
+    address.address,
+    address.port
+  );
 });
