@@ -27,13 +27,13 @@ A Raspberry Pi server to manage messages to be sent to the [CactusPi Client](htt
 
 ## Plugins
 
-- [Weather](./plugins/weather/README.md)
-- [Bustime](./plugins/bustime/README.md)
-- [AlphaVantage](./plugins/alphavantage/README.md)
+- [Weather](./plugins/weather/)
+- [Bustime](./plugins/bustime/)
+- [AlphaVantage](./plugins/alphavantage/)
 
-[Set up plugin configs](./plugins/README.md#Plugin-Configs)
+[Set up plugin configs](./plugins/#Plugin-Configs)
 
-[Create your own plugins](./plugins/README.md#Create-Your-Own-Plugins)
+[Create your own plugins](./plugins/#Create-Your-Own-Plugins)
 
 ## Instructions
 
