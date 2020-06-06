@@ -10,7 +10,7 @@ This plugin fetches stock market information from the Alpha Vantage API.
 {
   "apikey": "alpha vantage api key",
   "function": "",
-  "symbols": ["SYMBOL1", "SYMBOL2"]
+  "symbol": "IBM"
 }
 ```
 
@@ -19,4 +19,4 @@ This plugin fetches stock market information from the Alpha Vantage API.
 | ----- | ----- |
 | `apikey` | replace it with the api key you requested. |
 | `functionName` | check the API documentation, example: `GLOBAL_QUOTE` |
-| `symbols` | a list of stock symbols, example: `IBM`. |
+| `symbol` | stock symbol, example: `IBM`. |

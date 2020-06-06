@@ -14,6 +14,7 @@
   },
   "plugins": {
     "weather": true,
-    "bustime": true
+    "bustime": true,
+    "alphavantage": true
   }
 }

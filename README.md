@@ -12,9 +12,18 @@ A Raspberry Pi server to manage messages to be sent to the [CactusPi Client](htt
 ## Controllers ##
 - CommandManager
 
+## Built-In End Points ##
+- `/hello` - sends `'Hello World!'` to cactuspi client
+- `/message/:message` - sends given message to cactuspi client
+- `/start` - sends start command to start the message queue on cactuspi client
+- `/stop` - sends stop command to pause the message queue on cactuspi client (can resume with start command)
+- `/clear` - sends clear command to empty the message queue on cactuspi client
+- `/end` - sends end command to stop and empty the message queue on cactuspi client
+
 ## Plugins ##
-- Weather
-- Bustime
+- [Weather](./plugins/weather/README.md)
+- [Bustime](./plugins/bustime/README.md)
+- [AlphaVantage](./plugins/alphavantage/README.md)
 
 [Set up plugin configs](./plugins/README.md#Plugin-Configs)
 
