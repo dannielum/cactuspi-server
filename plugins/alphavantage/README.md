@@ -1,11 +1,13 @@
-## Alpha Vantage ##
+## Alpha Vantage
+
 This plugin fetches stock market information from the Alpha Vantage API.
 
 [Request API key](https://www.alphavantage.co/support/#api-key)
 
-[API Documentation]( https://www.alphavantage.co/documentation/)
+[API Documentation](https://www.alphavantage.co/documentation/)
 
-### Configuration ###
+### Configuration
+
 ```json
 {
   "apikey": "alpha vantage api key",

@@ -1,12 +1,14 @@
-## Service Name ##
+## Service Name
+
 This plugin fetches data from the API.
 
 [Request API key]() - link to API
 
-### Configuration ###
+### Configuration
+
 ```json
 {
-  "apiKey": "api key",
+  "apiKey": "api key"
 }
 ```
 
@@ -14,3 +16,4 @@ This plugin fetches data from the API.
 | Field | Value |
 | ----- | ----- |
 | `apiKey` | replace it with the api key you requested. |
+Î

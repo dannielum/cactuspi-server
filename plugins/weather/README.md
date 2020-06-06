@@ -1,9 +1,11 @@
-## Weather ##
+## Weather
+
 This plugin fetches weather information from the Weather API.
 
 [Request API key](https://openweathermap.org/api)
 
-### Configuration ###
+### Configuration
+
 ```json
 {
   "apiKey": "weather api key",
