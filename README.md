@@ -16,9 +16,9 @@ A Raspberry Pi server to manage messages to be sent to the [CactusPi Client](htt
 - Weather
 - Bustime
 
-[Set up plugin configs](./plugins/PLUGINS.md#Plugin-Configs)
+[Set up plugin configs](./plugins/README.md#Plugin-Configs)
 
-[Create your own plugins](./plugins/PLUGINS.md#Create-Your-Own-Plugins)
+[Create your own plugins](./plugins/README.md#Create-Your-Own-Plugins)
 
 ## Instructions ##
 1. Download cactuspi-server.
