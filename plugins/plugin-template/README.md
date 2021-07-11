@@ -16,4 +16,3 @@ This plugin fetches data from the API.
 | Field | Value |
 | ----- | ----- |
 | `apiKey` | replace it with the api key you requested. |
-Î
