@@ -9,15 +9,16 @@ const config = JSON.parse(configFile);
 const { address, port, plugins } = config;
 
 const pluginServices = [];
-Object.entries(plugins).forEach(([plugin, enabled]) => {
-  if (enabled) {
+Object.entries(plugins).forEach(([plugin, options = {}]) => {
+  if (options.enabled) {
     try {
       pluginServices.push({
         name: plugin,
         service: require(`./plugins/${plugin}`),
+        options,
       });
     } catch ({ message }) {
-      console.error(message);
+      console.error(`Plugin Error: ${plugin}`, message);
     }
   }
 });
@@ -27,14 +28,15 @@ const commandManager = new CommandManager(publisher);
 
 const app = express();
 
-pluginServices.forEach(({ name, service }) => {
-  const plugin = new service(publisher);
+pluginServices.forEach(({ name, service, options }) => {
+  const plugin = new service(options);
   if (plugin.init) {
     plugin.init();
   }
 
-  app.get(`/${name}/:param?`, (req, res) => {
-    plugin.fetch(req, res);
+  app.get(`/${name}/:param?`, async (req, res) => {
+    const { message, metadata } = await plugin.fetch(req, res);
+    publisher.publish(message, metadata);
   });
 });
 

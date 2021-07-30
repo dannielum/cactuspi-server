@@ -8,20 +8,22 @@ This plugin fetches bus time information from the MTA BusTime API.
 
 ```json
 {
-  "apiKey": "bustime api key",
-  "default": "line1",
-  "options": {
-    "line1": {
-      "directionRef": 0,
-      "maximumStopVisits": 3,
-      "monitoringRef": "<MONITORING REF>",
-      "lineRef": "MTA NYCT_<BUS NUMBER>"
-    },
-    "line2": {
-      "directionRef": 0,
-      "maximumStopVisits": 3,
-      "monitoringRef": "<MONITORING REF>",
-      "lineRef": "MTA NYCT_<BUS NUMBER>"
+  "plugins": {
+    "apiKey": "bustime api key",
+    "default": "line1",
+    "options": {
+      "line1": {
+        "directionRef": 0,
+        "maximumStopVisits": 3,
+        "monitoringRef": "<MONITORING REF>",
+        "lineRef": "MTA NYCT_<BUS NUMBER>"
+      },
+      "line2": {
+        "directionRef": 0,
+        "maximumStopVisits": 3,
+        "monitoringRef": "<MONITORING REF>",
+        "lineRef": "MTA NYCT_<BUS NUMBER>"
+      }
     }
   }
 }

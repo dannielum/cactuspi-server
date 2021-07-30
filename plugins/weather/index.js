@@ -1,51 +1,55 @@
-const fs = require('fs');
 const request = require('request');
 
-const configFile = fs.readFileSync(`${__dirname}/config.json`);
-const config = JSON.parse(configFile);
-
 module.exports = class Weather {
-  constructor(publisher) {
-    this._publisher = publisher;
-
+  constructor(config) {
     const { city, unit, apiKey } = config;
     this._unit = unit;
     this._weatherUrl = `http://api.openweathermap.org/data/2.5/weather?zip=${city}&units=${unit}&appid=${apiKey}`;
   }
 
-  init() {
-  }
+  init() {}
 
   fetch(req, res) {
-    request(this._weatherUrl, (err, response, body) => {
-      if (err) {
-        throw new Error('Weather Error', err);
-      }
+    return new Promise((resolve, reject) => {
+      request(this._weatherUrl, (error, response, body) => {
+        if (error) {
+          return reject({ name: 'Plugin Error: weather', error });
+        }
 
-      const result = JSON.parse(body);
-      if (result.main === undefined){
-        throw new Error('Weather: failed to get weather data, please try again.');
-      }
+        const result = JSON.parse(body);
+        if (result.main === undefined) {
+          return reject({
+            name: 'Plugin Error: weather',
+            error: 'failed to get weather data, please try again.',
+          });
+        }
 
-      const TEMP_UNITS = {
-        'default': 'K',
-        'metric': 'C',
-        'imperial': 'F'
-      };
-      const unit = TEMP_UNITS[this._unit];
-      const temperature = `Now: ${Math.round(result.main.temp)}'${unit}. Today ${Math.round(result.main.temp_min)}'${unit} to ${Math.round(result.main.temp_max)}'${unit}.`;
-      const condition = `Forecast: ${result.weather[0].description}. Humidity: ${result.main.humidity}%.`;
-      const message = `${result.name} - ${temperature} ${condition}`;
+        const TEMP_UNITS = {
+          default: 'K',
+          metric: 'C',
+          imperial: 'F',
+        };
+        const unit = TEMP_UNITS[this._unit];
+        const temperature = `Now: ${Math.round(
+          result.main.temp
+        )}'${unit}. Today ${Math.round(
+          result.main.temp_min
+        )}'${unit} to ${Math.round(result.main.temp_max)}'${unit}.`;
+        const condition = `Forecast: ${result.weather[0].description}. Humidity: ${result.main.humidity}%.`;
+        const message = `${result.name} - ${temperature} ${condition}`;
 
-      console.log('Weather', message);
-      this._publisher.publish(message, {
-        'repeat': false,
-        'name': 'weather',
-        'duration': 35,
-        'priority': false
+        res.send(message);
+
+        return resolve({
+          message,
+          metadata: {
+            repeat: false,
+            name: 'weather',
+            duration: 35,
+            priority: false,
+          },
+        });
       });
     });
-
-    res.send('Weather fetched');
   }
 };

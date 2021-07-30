@@ -1,12 +1,8 @@
-const fs = require('fs');
 const request = require('request');
 
-const configFile = fs.readFileSync(`${__dirname}/config.json`);
-const config = JSON.parse(configFile);
-
 module.exports = class Weather {
-  constructor(publisher) {
-    this._publisher = publisher;
+  constructor(config) {
+    this._config = config;
 
     // get the config params
     const { params } = config;
@@ -21,22 +17,23 @@ module.exports = class Weather {
 
   fetch(req, res) {
     // do fetch work
-    request(this._url, (err, response, body) => {
-      if (err) {
-        throw new Error('Error', err);
-      }
+    return new Promise((resolve, reject) => {
+      request(this._url, (error, response, body) => {
+        if (error) {
+          reject({ name: 'Plugin Error: plugin-name', error });
+        }
 
-      const message = JSON.parse(body);
+        const message = JSON.parse(body);
 
-      console.log('API', message);
-      this._publisher.publish(message, {
-        'repeat': false,  // whether this message will loop in the cactuspi-client
-        'name': 'api-name', // name of your api
-        'duration': 35, // number of seconds to run
-        'priority': false // display immediate or push to queue
+        res.send(message);
+
+        resolve(message, {
+          repeat: false, // whether this message will loop in the cactuspi-client
+          name: 'api-name', // name of your api
+          duration: 35, // number of seconds to run
+          priority: false, // display immediate or push to queue
+        });
       });
     });
-
-    res.send('API fetched');
   }
 };

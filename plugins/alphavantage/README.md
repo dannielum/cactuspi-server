@@ -10,9 +10,11 @@ This plugin fetches stock market information from the Alpha Vantage API.
 
 ```json
 {
-  "apikey": "alpha vantage api key",
-  "function": "",
-  "symbol": "IBM"
+  "plugins": {
+    "apikey": "alpha vantage api key",
+    "function": "",
+    "symbol": "IBM"
+  }
 }
 ```
 

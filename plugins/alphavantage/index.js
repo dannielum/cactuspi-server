@@ -1,44 +1,51 @@
-const fs = require('fs');
 const request = require('request');
 
-const configFile = fs.readFileSync(`${__dirname}/config.json`);
-const config = JSON.parse(configFile);
-
 module.exports = class Weather {
-  constructor(publisher) {
-    this._publisher = publisher;
+  constructor(config) {
+    this._config = config;
   }
 
   init() {}
 
   fetch(req, res) {
-    const { functionName, symbol: defaultSymbol, apikey } = config;
+    const { functionName, symbol: defaultSymbol, apikey } = this._config;
     const symbol = req.params.param || defaultSymbol;
 
     const url = `https://www.alphavantage.co/query?function=${functionName}&symbol=${symbol}&apikey=${apikey}`;
-    request(url, (err, response, body) => {
-      if (err) {
-        throw new Error('Alphavantage Error', err);
-      }
 
-      const results = JSON.parse(body);
+    return new Promise((resolve, reject) => {
+      request(url, (error, response, body) => {
+        if (error) {
+          return reject({
+            name: 'Plugin Error: alphavantage',
+            error,
+          });
+        }
 
-      if (results['Error Message']) {
-        throw new Error('Alphavantage Error', results['Error Message']);
-      }
+        const results = JSON.parse(body);
 
-      const message = this.parseMessage(functionName, results);
+        if (results['Error Message']) {
+          return reject({
+            name: 'Plugin Error: alphavantage',
+            error: results['Error Message'],
+          });
+        }
 
-      console.log('Alphavantage', message);
-      this._publisher.publish(message, {
-        repeat: false,
-        name: 'alphavantage',
-        duration: 35,
-        priority: false,
+        const message = this.parseMessage(functionName, results);
+
+        res.send(message);
+
+        return resolve({
+          message,
+          metadata: {
+            repeat: false,
+            name: 'alphavantage',
+            duration: 35,
+            priority: false,
+          },
+        });
       });
     });
-
-    res.send('Alphavantage fetched');
   }
 
   parseMessage(functionName, results) {

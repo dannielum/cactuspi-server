@@ -25,24 +25,50 @@ Please use [plugin-template](./plugin-template) as reference.
    - index.js
    - README.md
 3. Follow the instruction in the provided template.
-4. Make sure you add your plugins to the project `config.json`. Please note that the plugin name here is the directory name of your plugin. Set the value to `true` to enable it.
+4. Make sure you add your plugins to the project `config.json`. Please note that the plugin name here is the directory name of your plugin. Set the config required for your plugin in the project `config.json`, and set the `enabled` value to `true` to enable it.
 
 ```json
   "plugins": {
-    "weather": true,
-    "bustime": true,
-    "your-plugin": true
+    "weather": {
+      "enabled": true,
+      "apiKey": "",
+      "city": "",
+      "unit": ""
+    },
+    "bustime": {
+      "enabled": true,
+      "apiKey": "",
+      "default": "",
+      "options": {
+        "busstop": {
+          "directionRef": 0,
+          "maximumStopVisits": 3,
+          "monitoringRef": 12345,
+          "lineRef": ""
+        }
+      }
+    },
+    "alphavantage": {
+      "enabled": true,
+      "apikey": "",
+      "functionName": "",
+      "symbol": ""
+    }
   }
 ```
 
 ### Message Metadata
 
 ```js
-this._publisher.publish(message, {
-  repeat: false,
-  name: 'apiName',
-  duration: 30,
-  priority: false,
+return new Promise((resolve, reject) => {
+  // your plugin logic here
+  
+  resolve(message, {
+    repeat: false,
+    name: 'apiName',
+    duration: 30,
+    priority: false,
+  });
 });
 ```
 

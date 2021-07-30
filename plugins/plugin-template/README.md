@@ -8,7 +8,9 @@ This plugin fetches data from the API.
 
 ```json
 {
-  "apiKey": "api key"
+  "plugins": {
+    "apiKey": "api key"
+  }
 }
 ```
 

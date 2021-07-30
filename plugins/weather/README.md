@@ -8,9 +8,11 @@ This plugin fetches weather information from the Weather API.
 
 ```json
 {
-  "apiKey": "weather api key",
-  "city": "city",
-  "unit": "metric"
+  "plugins": {
+    "apiKey": "weather api key",
+    "city": "city",
+    "unit": "metric"
+  }
 }
 ```
 
