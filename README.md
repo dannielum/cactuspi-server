@@ -27,6 +27,8 @@ A Raspberry Pi server to manage messages to be sent to the [CactusPi Client](htt
 
 ## Plugins
 
+Cactus Pi Server is importing the plugins from the [Cactus Pi Service](https://github.com/dannielum/cactuspi-service) library. Some of the availale plugins are:
+
 - [Weather](./plugins/weather/)
 - [Bustime](./plugins/bustime/)
 - [AlphaVantage](./plugins/alphavantage/)

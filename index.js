@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 
-const { Publisher } = require('./services');
+const { Publisher, Plugins } = require('cactuspi-service');
 const CommandManager = require('./controllers/command-manager');
 
 const configFile = fs.readFileSync('./config.json');
@@ -14,7 +14,7 @@ Object.entries(plugins).forEach(([plugin, options = {}]) => {
     try {
       pluginServices.push({
         name: plugin,
-        service: require(`./plugins/${plugin}`),
+        service: Plugins[plugin],
         options,
       });
     } catch ({ message }) {
