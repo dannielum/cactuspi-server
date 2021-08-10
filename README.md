@@ -9,6 +9,7 @@ A Raspberry Pi server to manage messages to be sent to the [CactusPi Client](htt
 ## Services
 
 - Publisher
+  - AWS SQS
   - PubNub
   - MQTT (Home Assistant)
 
@@ -55,8 +56,8 @@ cp config.json.sample config.json
 ```
 
 3. Open config.json and set the `address` and `port` of the service.
-4. Replace the PubNub or MQTT configs in `config.json`.
-5. Set `pubsubType` to either `pubnub` or `mqtt` in `config.json`.
+4. Replace the SQS, PubNub, or MQTT configs in `config.json`.
+5. Set `pubsubType` to `sns`, `pubnub`, or `mqtt` in `config.json`.
 6. Run
 
 ```
